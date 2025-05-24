@@ -1,19 +1,19 @@
 def isSymetric(s: str) -> bool:
-    s = s.lower().replace(" ", "")
-    if not s:
-        return True
-    if len(s) == 1:
-        return True
-    if len(s) == 2:
-        return s[0] == s[1]
-    if len(s) % 2 == 1:
-        return s[: len(s) // 2] == s[-(len(s) // 2 + 1) :][::-1]
-    else:
-        return s[: len(s) // 2] == s[-(len(s) // 2) :][::-1]
+    stack = []
+    brackets = {"]": "[", "}": "{", ")": "("}
+
+    for char in s:
+        if char in "[{(":
+            stack.append(char)
+        elif char in "]})":
+            if not stack or stack.pop() != brackets[char]:
+                return False
+
+    return len(stack) == 0
 
 
 def main():
-    data = "abobA "
+    data = "[{[]}]"
     print(isSymetric(data))
     data = "abobA"
     print(isSymetric(data))
